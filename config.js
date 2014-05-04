@@ -100,6 +100,21 @@ if (msos.config.debug_script) {
 
 
 // --------------------------
+// Generate HelloJS redirect path
+// --------------------------
+
+(function () {
+	"use strict";
+
+	var url = msos.purl(),
+		cfg = msos.config;
+
+	cfg.hellojs_redirect = url.attr('protocol') + '://' + url.attr('host') + cfg.hellojs_redirect;
+
+}());
+
+
+// --------------------------
 // Google Related Globals
 // --------------------------
 
