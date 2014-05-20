@@ -164,6 +164,7 @@ msos.config.google.hide_tooltip = {
 msos.config.social = {
 	google: '526338426431.apps.googleusercontent.com',
 	facebook: '583738878406494',
+	windows: '000000004C107945',
 	instagram: '34e2fb9bd305446cb080d852597584e9',
 	cloudmade: 'efca0172cf084708a66a6d48ae1046dd',
 	foursquare: {
