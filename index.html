@@ -129,10 +129,16 @@
 						function (p) {
 							msos.notify.info('Successful login to ' + r.network, 'API Success');
 							document.getElementById(r.network).innerHTML = "Connected to " + r.network + " as " + p.name;
+							if (msos.config.verbose) {
+								msos.console.debug('Page: index.html -> success, data:', p);
+							}
 						}
 					).error(
 						function (p) {
 							msos.notify.error('Something went horribly wrong!', 'API Error');
+							if (msos.config.verbose) {
+								msos.console.debug('Page: index.html -> error, data:', p);
+							}
 						}
 					).failed(
 						function (p) {
