@@ -100,6 +100,21 @@ if (msos.config.debug_script) {
 
 
 // --------------------------
+// Generate HelloJS redirect path
+// --------------------------
+
+(function () {
+	"use strict";
+
+	var url = msos.purl(),
+		cfg = msos.config;
+
+	cfg.hellojs_redirect = url.attr('protocol') + '://' + url.attr('host') + cfg.hellojs_redirect;
+
+}());
+
+
+// --------------------------
 // Google Related Globals
 // --------------------------
 
@@ -147,13 +162,12 @@ msos.config.google.hide_tooltip = {
 
 // Social website API access keys
 msos.config.social = {
-	facebook: '164557207081656',
+	google: '526338426431.apps.googleusercontent.com',
+	facebook: '583738878406494',
+	windows: '000000004C107945',
 	instagram: '34e2fb9bd305446cb080d852597584e9',
 	cloudmade: 'efca0172cf084708a66a6d48ae1046dd',
-	foursquare: {
-		clientId: 'SFYWHRQ1LTUJEQWYQMHOCXYWNFNS0MKUCAGANTHLFUGJX02E',
-		clientSecret: 'WYUTTJB5MSYU5ABNPWKIHXKNGQDNZXEBQQC3PTQIKKY4IQZW'
-	}
+	foursquare: 'SFYWHRQ1LTUJEQWYQMHOCXYWNFNS0MKUCAGANTHLFUGJX02E'
 };
 
 
@@ -202,7 +216,7 @@ msos.load_adsense = function () {
 		msos.google_ad_vars();
 
 		if (msos.config.doctype === 'html5') {
-			window.document.write('<script src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>');
+			window.document.write('<script src="//pagead2.googlesyndication.com/pagead/show_ads.js"></script>');
 
 			msos.console.time('google_adsense');
 			msos.console.debug(temp_la + 'code inserted!');
