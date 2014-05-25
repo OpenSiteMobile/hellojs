@@ -79,7 +79,6 @@
 		<button class='btn btn-msos' id='windows'		onclick="hello.login({ network: 'windows' });"> windows</button>
 		<button class='btn btn-msos' id='instagram'		onclick="hello.login({ network: 'instagram' });"> instagram</button>
 		<button class='btn btn-msos' id='foursquare'	onclick="hello.login({ network: 'foursquare' });"> foursquare</button>
-		<button class='btn btn-msos' id='twitter'		onclick="hello.login({ network: 'twitter' });"> twitter</button>
 
 		<textarea id="event_log" class="msos_display msos_height msos_width"></textarea>
 	</div>
@@ -105,7 +104,6 @@
 			msos.require("hello.to.google");
 			msos.require("hello.to.instagram");
 			msos.require("hello.to.foursquare");
-			msos.require("hello.to.twitter");
 		}
 	);
 
@@ -128,7 +126,10 @@
 					hello.api(setup).success(
 						function (p) {
 							msos.notify.info('Successful login to ' + r.network, 'API Success');
-							document.getElementById(r.network).innerHTML = "Connected to " + r.network + " as " + p.name;
+							var full_name =	(p.data && p.data.full_name) ? p.data.full_name : '',
+								username =	(p.data && p.data.username)  ? p.data.username : '',
+								name = p.name || full_name || username || '';
+							document.getElementById(r.network).innerHTML = "Connected to " + r.network + (name ? " as " + name : '');
 							if (msos.config.verbose) {
 								msos.console.debug('Page: index.html -> success, data:', p);
 							}
