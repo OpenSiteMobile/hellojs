@@ -95,7 +95,13 @@ if (msos.config.debug_script) {
 	"use strict";
 
 	var url = msos.purl(),
-		cfg = msos.config;
+		cfg = msos.config,
+		win_loc = window.location;
+
+	// HelloJS must run under https protocol
+	if (url.attr('protocol') !== "https") {
+        win_loc.href = "https://" + win_loc.href.substring(win_loc.protocol.length, win_loc.href.length);
+    }
 
 	cfg.hellojs_redirect = url.attr('protocol') + '://' + url.attr('host') + cfg.hellojs_redirect;
 
@@ -139,7 +145,7 @@ msos.config.google.hide_tooltip = {
 
 // Social website API access keys
 msos.config.social = {
-	google: '526338426431.apps.googleusercontent.com',
+	google: '577279055785-cnsq3hnhe475vpqudk2bufv63aon79mj.apps.googleusercontent.com',
 	facebook: '583738878406494',
 	windows: '000000004C107945',
 	instagram: '34e2fb9bd305446cb080d852597584e9',
