@@ -95,7 +95,13 @@ if (msos.config.debug_script) {
 	"use strict";
 
 	var url = msos.purl(),
-		cfg = msos.config;
+		cfg = msos.config,
+		win_loc = window.location;
+
+	// HelloJS must run under https protocol
+	if (url.attr('protocol') !== "https") {
+        win_loc.href = "https://" + win_loc.href.substring(win_loc.protocol.length, win_loc.href.length);
+    }
 
 	cfg.hellojs_redirect = url.attr('protocol') + '://' + url.attr('host') + cfg.hellojs_redirect;
 
