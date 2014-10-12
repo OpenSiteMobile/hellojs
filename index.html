@@ -81,9 +81,10 @@
 	<h2>Demo hello.api('/me')</h2>
 
 	<div class="pgrph well">
-		This is a test page for our adapted version of the HelloJS client side Javascript SDK for
-		making OAuth2 logins. Please note, this demo page should be run as: https://opensitemobile2.github.io/hellojs,
-		as most services require it to run under SSL.
+		This is a test page for our adapted version of the HelloJS (http://adodson.com/hello.js/) client side Javascript
+		SDK for making OAuth2 authenticated logins. Our version is an OAuth2 only adaptation, which is also streamlined for
+		just our needs. Please note, this demo page will only run correctly as: https://opensitemobile2.github.io/hellojs,
+		as most services require it to run under SSL (https protocol).
 	</div>
 
 	<div id="content">
@@ -106,6 +107,7 @@
 		function () {
 			"use strict";
 
+			// Load all the interface modules you use above
 			msos.require("hello.to.facebook");
 			msos.require("hello.to.windows");
 			msos.require("hello.to.google");
