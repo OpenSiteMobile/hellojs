@@ -139,7 +139,7 @@ msos.config.google.hide_tooltip = {
 
 // Social website API access keys
 msos.config.social = {
-	google: '526338426431.apps.googleusercontent.com',
+	google: '577279055785-cnsq3hnhe475vpqudk2bufv63aon79mj.apps.googleusercontent.com',
 	facebook: '583738878406494',
 	windows: '000000004C107945',
 	instagram: '34e2fb9bd305446cb080d852597584e9',
