@@ -137,7 +137,7 @@
 							msos.notify.info('Successful login to ' + r.network, 'API Success');
 							var full_name =	(p.data && p.data.full_name) ? p.data.full_name : '',
 								username =	(p.data && p.data.username)  ? p.data.username : '',
-								name = p.name || full_name || username || '';
+								name = p.displayName || p.name || full_name || username || '';
 							document.getElementById(r.network).innerHTML = "Connected to " + r.network + (name ? " as " + name : '');
 							if (msos.config.verbose) {
 								msos.console.debug('Page: index.html -> success, data:', p);
