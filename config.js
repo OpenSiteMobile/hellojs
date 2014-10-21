@@ -69,7 +69,7 @@ if (msos.config.debug_script) {
 		msos.resource_url('underscore', 'v170.uc.js'),
 		msos.resource_url('hammer', 'v203.uc.js'),			// jQuery.hammer.js version of Hammer.js
 		msos.resource_url('backbone', 'v112.uc.js'),
-		msos.resource_url('hello', 'v020.uc.js'),
+		msos.resource_url('hello', 'v029.uc.js'),
 		msos.resource_url('','site.js'),					// Common installation specific setup code (which needs jQuery, underscore.js, etc.)
 		msos.resource_url('msos', 'core.uc.js')
 	];
@@ -79,7 +79,7 @@ if (msos.config.debug_script) {
 	// Standard site provided (including ext. bundles) scripts
     msos.deferred_scripts = [
 		msos.resource_url('msos', 'bundle.min.js'),			// Modernizr, jQuery, jQuery-UI, Hammer.js, Underscore, Backbone bundled together
-		msos.resource_url('hello', 'v020.uc.js'),
+		msos.resource_url('hello', 'v029.min.js'),
 		msos.resource_url('','site.js'),
 		msos.resource_url('msos', 'core.min.js')
 	];
