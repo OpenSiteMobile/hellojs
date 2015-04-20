@@ -113,6 +113,12 @@
 
 	<ul id="list"></ul>
 
+	<button id="more_google" style="display:none;"></button>
+	<button id="more_facebook" style="display:none;"></button>
+	<button id="more_windows" style="display:none;"></button>
+	<button id="more_instagram" style="display:none;"></button>
+	<button id="more_foursquare" style="display:none;"></button>
+
 	<textarea id="event_log" class="msos_display msos_height msos_width"></textarea>
 
 	<div id='social_ties'></div>
@@ -141,8 +147,9 @@
 			var temp_hm = 'Page: friends.html -> ',
 				db = msos.config.debug,
 				$event_log = jQuery('#event_log');
+				list = document.getElementById('list');
 
-				msos.console.info(temp_hm + 'loaded!');
+			msos.console.info(temp_hm + 'loaded!');
 
 			$event_log.text("Debugging Output:\n");
 
@@ -154,28 +161,36 @@
 			hello.on(
 				'auth.success',
 				function (r) {
-					var setup = {
-							network: r.network,
-							path: 'me/friends',
-							data: []
-						};
 
 					// Get the friends
-					hello.api(setup).success(
-						function (p) {
+					hello(r.network).api('me/friends', { limit: 10 }, function responseHandler(p) {
+			
 							msos.notify.info('Successful login to ' + r.network, 'API Success');
 
 							var i = 0,
 								o,
-								li;
+								li,
+								btn_more = document.getElementById('more_' + r.network);
 
 							for (i = 0; i < p.data.length; i += 1) {
 								o = p.data[i];
 								li = document.createElement('li');
 
 								li.innerHTML = o.name + (o.thumbnail ? " <a href=" + o.thumbnail + " target='_blank'>picture</a>" : '');
-								document.getElementById('list').appendChild(li);
+								list.appendChild(li);
 							};
+
+							btn_more.onclick = function () {
+								// Clear earlier responses...
+								list.innerHTML = '';
+								btn_more.style.display = 'none';
+
+								// Make another request and handle is in the same way
+								hello(r.network).api(r.paging.next, { limit: 10 }, responseHandler);
+							};
+
+							btn_more.innerHTML = "Next from " + network;
+							btn_more.style.display = 'block';
 
 							if (db) { msos.console.debug(temp_hm + 'success, data:', p); }
 						}
