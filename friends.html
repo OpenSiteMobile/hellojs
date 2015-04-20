@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="utf-8" />
+<meta name="handheldfriendly" content="true" />
+<meta name="mobileoptimized"  content="width" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Hello.js client side OAuth2 SDK profile demo via MobileSiteOS!" />
+<meta name="keywords" content="OAuth2, hellojs, OAuth2 login, javascript oauth2" />
+<meta name="author" content="Dwight Vietzke" />
+
+    <title>Hello.js Get Friends Demo</title>
+
+<style type="text/css">
+/* <![CDATA[ */
+
+	/*
+	 *	Note: Using an external file is fine, but it is best to leave this css here!
+	 *	This prevents a "blank page" showing on slow connections.
+	*/
+	html, body, table, div, article, section, fieldset {
+		font-family: "Comic Sans MS", cursive, sans-serif
+	}
+	html, body {
+		background-color: #A1A1A1;
+	}
+	body {
+		background-image: url(../mobilesiteos/images/grid_bg.png);
+		background-repeat: repeat-x;
+	}
+	#body {
+		display: none;
+	}
+
+	#no_javascript {
+		background-color: #FFF;
+		border: 2px solid #999;
+		border-radius: 0.4em;
+		margin-left: auto;
+		margin-right: auto;
+		width: 60%;
+	}
+	#no_javascript > i {
+		color: red;
+	}
+
+	#social_login {
+		width: 400px;
+	}
+	#social_login > ul > li {
+		margin-top: 0.5em;
+	}
+	#social_login > ul > li > button {
+		width: 380px;
+		text-align: left;
+		font-size: medium;
+	}
+
+/* ]]> */
+</style>
+
+<link rel='shortcut icon' href='../mobilesiteos/images/osm.ico' />
+
+<script src="../mobilesiteos/msos/base.min.js"></script>
+<script src="./config.js"></script>
+
+</head>
+<body>
+
+<noscript>
+	<h3 id="no_javascript">
+		<i class="fa fa-ban"></i> We're sorry, but this site requires JavaScript be enabled!
+	</h3>
+</noscript>
+
+<div id='body'>
+
+	<div id="rotate_marquee">
+		<ins id="google_ad" class="adsbygoogle osm-responsive-2014" style="display:inline-block" data-ad-client="ca-pub-0581487774111572" data-ad-slot="2083707378"></ins>
+		<div id='marquee'>OpenSiteMobile</div>
+		<div id='slogan'>Open source software for the mobile web!</div>
+	</div>
+
+	<div id="header" class="msos_navbar">
+		<ul><li style="display: inline;"><a style="float: left;" class="btn btn-msos" href="../" title="Site index page"><i class="fa fa-home"></i></a></li></ul>
+		<ul>
+			<li style="display: inline;"><a style="float: right;" class="btn btn-msos" href="https://github.com/OpenSiteMobile2/mobilesiteos/" title="Module code url"><i class="fa fa-external-link"></i> Module Code</a></li>
+			<li style="display: inline;"><a style="float: right;" class="btn btn-msos" href="https://github.com/OpenSiteMobile2/hellojs/" title="Page code url"><i class="fa fa-external-link"></i> Page Code</a></li>
+		</ul>
+	</div>
+
+	<h2>Demo hello.api('me/friends')</h2>
+
+	<div class="pgrph well">
+		This is a test page for our adapted version of the HelloJS (http://adodson.com/hello.js/) client side Javascript
+		SDK for making OAuth2 authenticated logins. Our version is an OAuth2 only adaptation, which is also streamlined for
+		just our needs. Please note, this demo page will only run correctly as: https://opensitemobile2.github.io/hellojs/friends.html,
+		as most services require it to run under SSL (https protocol).
+	</div>
+
+	<div id="social_login" class="well">
+		<ul>
+			<li><button class='btn btn-msos' id='google'	> google</button></li>
+			<li><button class='btn btn-msos' id='facebook'	> facebook</button></li>
+			<li><button class='btn btn-msos' id='windows'	> windows</button></li>
+			<li><button class='btn btn-msos' id='instagram'	> instagram</button></li>
+			<li><button class='btn btn-msos' id='foursquare'> foursquare</button></li>
+		</ul>
+	</div>
+
+	<h2>Friends list</h2>
+
+	<ul id="list"></ul>
+
+	<textarea id="event_log" class="msos_display msos_height msos_width"></textarea>
+
+	<div id='social_ties'></div>
+
+</div> <!-- end 'body' div -->
+
+<script>
+
+	msos.onload_func_pre.push(
+		function () {
+			"use strict";
+
+			// Load all the interface modules you use above
+			msos.require("hello.to.facebook");
+			msos.require("hello.to.windows");
+			msos.require("hello.to.google");
+			msos.require("hello.to.instagram");
+			msos.require("hello.to.foursquare");
+		}
+	);
+
+	msos.onload_functions.push(
+		function () {
+			"use strict";
+
+			var temp_hm = 'Page: friends.html -> ',
+				db = msos.config.debug,
+				$event_log = jQuery('#event_log');
+
+				msos.console.info(temp_hm + 'loaded!');
+
+			$event_log.text("Debugging Output:\n");
+
+			function gen_debug_output(operation, output) {
+				$event_log.text($event_log.text() + "\n" + operation + ": " + JSON.stringify(output, null, '\t'));
+				if (db) { msos.console.debug(temp_hm + operation); }
+			}
+
+			hello.on(
+				'auth.success',
+				function (r) {
+					// Get the friends
+					hello.api(
+						r.network +':/me/friends',
+						function (p) {
+							var i = 0,
+								o,
+								li;
+
+							for (i = 0; i < p.data.length; i += 1) {
+								o = p.data[i];
+								li = document.createElement('li');
+
+								li.innerHTML = o.name + (o.thumbnail ? " <a href=" + o.thumbnail + " target='_blank'>picture</a>" : '');
+								document.getElementById('list').appendChild(li);
+							};
+						}
+					).success(
+						function (p) {
+							msos.notify.info('Successful login to ' + r.network, 'API Success');
+							if (db) { msos.console.debug(temp_hm + 'success, data:', p); }
+						}
+					).error(
+						function (p) {
+							msos.notify.error('Something went horribly wrong!', 'API Error');
+							msos.console.error(temp_hm + 'error, data:', p);
+						}
+					).failed(
+						function (p) {
+							msos.notify.warn('Failed action ' + r.network, 'API Failed');
+							msos.console.warn(temp_hm + 'failed, data:', p);
+						}
+					);
+				}
+			);
+
+			hello.on(
+				"success",
+				function (e) { gen_debug_output('success', e); }
+			);
+			hello.on(
+				"error",
+				function (e) { gen_debug_output('error', e); }
+			);
+			hello.on(
+				"failed",
+				function (e) { gen_debug_output('failed', e); }
+			);
+			hello.on(
+				"logout.success",
+				function (e) { gen_debug_output('logout.success', e); }
+			);
+			hello.on(
+				"logout.failed",
+				function (e) { gen_debug_output('logout.failed', e); }
+			);
+			hello.on(
+				"auth.expired",
+				function (e) { gen_debug_output('auth.expired', e); }
+			);
+			hello.on(
+				"auth.logout",
+				function (e) { gen_debug_output('auth.logout', e); }
+			);
+			hello.on(
+				"auth.success",
+				function (e) { gen_debug_output('auth.success', e); }
+			);
+			hello.on(
+				"auth.update",
+				function (e) { gen_debug_output('auth.update', e); }
+			);
+
+			// We can load this late
+			msos.require("hello.to.monitor");
+
+			jQuery('#social_login').find('button').click(
+				function () {
+					var network_id = this.id;
+
+					hello.login(
+						{ network: network_id },
+						{ scope: 'friends' }
+					);
+				}
+			);
+
+			jQuery('#body').css('display', 'block');
+		}
+	);
+
+</script>
+
+</body>
+</html>
