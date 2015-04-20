@@ -46,13 +46,13 @@
 	}
 
 	#social_login {
-		width: 350px;
+		width: 400px;
 	}
 	#social_login > ul > li {
 		margin-top: 0.5em;
 	}
 	#social_login > ul > li > button {
-		width: 330px;
+		width: 380px;
 		text-align: left;
 		font-size: medium;
 	}
@@ -99,7 +99,7 @@
 		as most services require it to run under SSL (https protocol).
 	</div>
 
-	<div id="social_login">
+	<div id="social_login" class="well">
 		<ul>
 			<li><button class='btn btn-msos' id='google'	> google</button></li>
 			<li><button class='btn btn-msos' id='facebook'	> facebook</button></li>
@@ -140,10 +140,10 @@
 
 				msos.console.info(temp_hm + 'loaded!');
 
-			$event_log.text("Debugging Output:\n\n");
+			$event_log.text("Debugging Output:\n");
 
 			function gen_debug_output(operation, output) {
-				$event_log.text(operation + ": " + JSON.stringify(output, null, '\t') + "\n" + $event_log.text());
+				$event_log.text($event_log.text() + "\n" + operation + ": " + JSON.stringify(output, null, '\t'));
 				if (db) { msos.console.debug(temp_hm + operation); }
 			}
 
