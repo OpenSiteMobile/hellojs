@@ -238,8 +238,10 @@
 					var network_id = this.id;
 
 					hello.login(
-						{ network: network_id },
-						{ scope: 'friends' }
+						{
+							network: network_id,
+							scope: 'friends'
+						}
 					);
 				}
 			);
