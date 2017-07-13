@@ -3,7 +3,10 @@
 <head>
 	<title>hello.js - Javascript API for OAuth2 authentication and REST services</title>
 
-	<script src="client_ids.js"></script>
+	<script src="../../mobilesiteos/msos/base.uc.js"></script>
+	<script src="../../mobilesiteos/config.js"></script>
+	<script src="../../mobilesiteos/core.uc.js"></script>
+
 	<style>ul:empty:after{content:'empty';font-weight:bold;color:#aaa;}</style>
 </head>
 <body>
@@ -33,14 +36,14 @@
 <h2>Initiate</h2>
 <script class="pre">
 hello.init( {
-		windows : CLIENT_IDS_ALL.windows,
-		google : CLIENT_IDS_ALL.google,
-		facebook : CLIENT_IDS_ALL.facebook,
-		yahoo : CLIENT_IDS_ALL.yahoo
+		windows : msos.config.oauth2.windows,
+		google : msos.config.oauth2.google,
+		facebook : msos.config.oauth2.facebook,
+		yahoo : msos.config.oauth2.yahoo
 	}
 	, {
 		redirect_uri:'./redirect.html',
-		oauth_proxy : OAUTH_PROXY_URL,
+		oauth_proxy : msos.config.oauth2.proxy_url,
 		scope:"friends"
 	}
 );

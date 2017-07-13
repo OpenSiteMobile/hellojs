@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <link rel="stylesheet" href="/adorn/adorn.css"/>
-<script src="/adorn/adorn.js" async></script>
-<script src="../client_ids.js"></script>
+
+	<script src="../../mobilesiteos/msos/base.uc.js"></script>
+	<script src="../../mobilesiteos/config.js"></script>
+	<script src="../../mobilesiteos/core.uc.js"></script>
+
 <script src="//js.live.net/v5.0/wl.debug.js"></script>
 <title>Windows Live demo</title>
 
@@ -17,7 +20,7 @@
 
 <script>
 	WL.init({
-		client_id:WINDOWS_CLIENT_ID,
+		client_id:msos.config.oauth2.windows,
 		redirect_uri: window.location.href,
 		scope: "wl.signin", 
 		response_type: "token"

@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 
-<script src="client_ids.js"></script>
-<script src="./src/hello.polyfill.js"></script>
-<script src="./src/hello.js"></script>
-<script src="./src/modules/instagram.js"></script>
+	<script src="../../mobilesiteos/msos/base.uc.js"></script>
+	<script src="../../mobilesiteos/config.js"></script>
+	<script src="../../mobilesiteos/core.uc.js"></script>
+	<script src="./src/hello.polyfill.js"></script>
+	<script src="./src/hello.js"></script>
+	<script src="./src/modules/instagram.js"></script>
 
 <title>hello( instagram )</title>
 <h1>hello( instagram )</h1>
@@ -68,7 +70,7 @@ function photosHandler( r ){
 
 <script class="pre">
 hello.init({
-	instagram : INSTAGRAM_CLIENT_ID
+	instagram : msos.config.oauth2.instagram
 },{
 	scope : 'photos',
 	redirect_uri:'./redirect.html'

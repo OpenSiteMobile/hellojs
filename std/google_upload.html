@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 
-<script src="client_ids.js"></script>
+	<script src="../../mobilesiteos/msos/base.uc.js"></script>
+	<script src="../../mobilesiteos/config.js"></script>
+	<script src="../../mobilesiteos/core.uc.js"></script>
 
 <script>
 // DEBUGGING
@@ -26,7 +28,7 @@ window.addEventListener('message', function(){
 
 <script class="pre">
 hello.init({
-	google : GOOGLE_CLIENT_ID
+	google : msos.config.oauth2.google
 },	{
 	redirect_uri:'./redirect.html',
 	scope : 'publish_files'

@@ -4,7 +4,9 @@
 
 	<title>hello.js - Login Events</title>
 
-	<script src="client_ids.js"></script>
+	<script src="../../mobilesiteos/msos/base.uc.js"></script>
+	<script src="../../mobilesiteos/config.js"></script>
+	<script src="../../mobilesiteos/core.uc.js"></script>
 	<script src="./src/hello.js"></script>
 	<script src="./src/modules/windows.js"></script>
 	<script src="./src/modules/facebook.js"></script>
@@ -37,10 +39,10 @@ function login(network){
 <p>Set up credentials for all experiments.</p>
 <script class="pre">
 hello.init( {
-	windows	: CLIENT_IDS_ALL.windows,
-	facebook: CLIENT_IDS_ALL.facebook,
-	google 	: CLIENT_IDS_ALL.google,
-	github	: CLIENT_IDS_ALL.github
+	windows	: msos.config.oauth2.windows,
+	facebook: msos.config.oauth2.facebook,
+	google 	: msos.config.oauth2.google,
+	github	: msos.config.oauth2.github
 },{
 	redirect_uri:'./redirect.html'
 });
