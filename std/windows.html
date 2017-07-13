@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 
-<script src="client_ids.js"></script>
-<script src="./src/hello.polyfill.js"></script>
-<script src="./src/hello.js"></script>
-<script src="./src/modules/windows.js"></script>
+	<script src="../../mobilesiteos/msos/base.uc.js"></script>
+	<script src="../../mobilesiteos/config.js"></script>
+	<script src="../../mobilesiteos/core.uc.js"></script>
+	<script src="./src/hello.polyfill.js"></script>
+	<script src="./src/hello.js"></script>
+	<script src="./src/modules/windows.js"></script>
 
 <title>hello( windows )</title>
 <h1>hello( windows )</h1>
@@ -35,11 +37,11 @@ function login(network){
 
 <script class="pre">
 hello.init({
-	'windows' : WINDOWS_CLIENT_ID
+	'windows' : msos.config.oauth2.windows
 },
 {
 	redirect_uri:'./redirect.html',
-	oauth_proxy: OAUTH_PROXY_URL
+	oauth_proxy: msos.config.oauth2.proxy_url
 });
 
 </script>

@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 
-<script src="client_ids.js"></script>
+	<script src="../../mobilesiteos/msos/base.uc.js"></script>
+	<script src="../../mobilesiteos/config.js"></script>
+	<script src="../../mobilesiteos/core.uc.js"></script>
+
 <style>
 
 img.picture{
@@ -96,7 +99,7 @@ hello.on('auth.login', function(auth){
 <script class="pre">
 
 // Initiate hellojs
-hello.init( CLIENT_IDS, {
+hello.init( msos.config.oauth2, {
 	scope: "files, photos",
 	redirect_uri: "./redirect.html"
 });

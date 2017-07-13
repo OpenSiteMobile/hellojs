@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 
-<script src="client_ids.js"></script>
+	<script src="../../mobilesiteos/msos/base.uc.js"></script>
+	<script src="../../mobilesiteos/config.js"></script>
+	<script src="../../mobilesiteos/core.uc.js"></script>
 
 <title>Simple SkyDrive Demo</title>
 <h1>Simple Skydrive Upload using XHR2</h1>
@@ -26,7 +28,7 @@
 <script>
 function login(){
 	window.location = 'https://oauth.live.com/authorize'+ 
-		'?client_id='+WINDOWS_CLIENT_ID+
+		'?client_id='+msos.config.oauth2.windows+
 		'&scope=wl.skydrive_update'+
 		'&response_type=token'+
 		'&redirect_uri='+encodeURIComponent(window.location.href);

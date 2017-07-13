@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 
-<script src="client_ids.js"></script>
-<script src="./src/hello.polyfill.js"></script>
-<script src="./src/hello.js"></script>
-<script src="./src/modules/flickr.js"></script>
+	<script src="../../mobilesiteos/msos/base.uc.js"></script>
+	<script src="../../mobilesiteos/config.js"></script>
+	<script src="../../mobilesiteos/core.uc.js"></script>
+	<script src="./src/hello.polyfill.js"></script>
+	<script src="./src/hello.js"></script>
+	<script src="./src/modules/flickr.js"></script>
 
 <title>hello( flickr )</title>
 <h1>hello( flickr )</h1>
@@ -20,11 +22,11 @@ hello.on('auth.login', function(r){
 });
 
 hello.init({
-	'flickr' : FLICKR_CLIENT_ID
+	'flickr' : msos.config.oauth2.flickr
 },
 {
 	redirect_uri:'./redirect.html',
-	oauth_proxy: OAUTH_PROXY_URL
+	oauth_proxy: msos.config.oauth2.proxy_url
 });
 
 </script>

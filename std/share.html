@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 
-<script src="client_ids.js"></script>
-<script src="./src/hello.polyfill.js"></script>
-<script src="./src/hello.js"></script>
-<script src="./src/modules/windows.js"></script>
-<script src="./src/modules/facebook.js"></script>
-<script src="./src/modules/google.js"></script>
+	<script src="../../mobilesiteos/msos/base.uc.js"></script>
+	<script src="../../mobilesiteos/config.js"></script>
+	<script src="../../mobilesiteos/core.uc.js"></script>
+	<script src="./src/hello.polyfill.js"></script>
+	<script src="./src/hello.js"></script>
+	<script src="./src/modules/windows.js"></script>
+	<script src="./src/modules/facebook.js"></script>
+	<script src="./src/modules/google.js"></script>
 
 <style>
 	form{
@@ -48,5 +50,5 @@ function post(network){
 	})
 }
 
-hello.init(CLIENT_IDS, {redirect_uri:'./redirect.html'});
+hello.init(msos.config.oauth2, {redirect_uri:'./redirect.html'});
 </script>

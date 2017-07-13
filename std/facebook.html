@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 
-<script src="client_ids.js"></script>
-<script src="./src/hello.polyfill.js"></script>
-<script src="./src/hello.js"></script>
-<script src="./src/modules/facebook.js"></script>
+	<script src="../../mobilesiteos/msos/base.uc.js"></script>
+	<script src="../../mobilesiteos/config.js"></script>
+	<script src="../../mobilesiteos/core.uc.js"></script>
+	<script src="./src/hello.polyfill.js"></script>
+	<script src="./src/hello.js"></script>
+	<script src="./src/modules/facebook.js"></script>
 
 <title>hello( facebook )</title>
 <h1>hello( facebook )</h1>
@@ -25,10 +27,10 @@ function login(network) {
 
 <script class="pre">
 hello.init({
-	facebook: FACEBOOK_CLIENT_ID
+	facebook: msos.config.oauth2.facebook
 }, {
 	redirect_uri: './redirect.html',
-	oauth_proxy: OAUTH_PROXY_URL
+	oauth_proxy: msos.config.oauth2.proxy_url
 });
 </script>
 

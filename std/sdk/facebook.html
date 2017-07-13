@@ -40,7 +40,7 @@ FB.Event.subscribe('auth.login', authResponse);
 <script class="pre">
 // Initiate the facebook app
 FB.init({
-	appId: FACEBOOK_CLIENT_ID,
+	appId: msos.config.oauth2.facebook,
 	scope: "basic",
 	status : true
 });

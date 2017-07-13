@@ -3,7 +3,10 @@
 <head>
 	<title>hello.js - demo - activities</title>
 
-	<script src="client_ids.js"></script>
+	<script src="../../mobilesiteos/msos/base.uc.js"></script>
+	<script src="../../mobilesiteos/config.js"></script>
+	<script src="../../mobilesiteos/core.uc.js"></script>
+
 	<style>ul:empty:after{content:'empty';font-weight:bold;color:#aaa;}</style>
 
 	<script src="./src/hello.polyfill.js"></script>
@@ -36,7 +39,7 @@ function getActivities(network){
 	});
 }
 
-hello.init( CLIENT_IDS, {redirect_uri:'./redirect.html'} );
+hello.init( msos.config.oauth2, {redirect_uri:'./redirect.html'} );
 
 </script>
 
