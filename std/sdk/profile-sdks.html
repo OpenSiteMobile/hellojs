@@ -1,9 +1,7 @@
 <!DOCTYPE html>
-
-	<script src="../../mobilesiteos/msos/base.uc.js"></script>
-	<script src="./config_std.js"></script>
-	<script src="../../mobilesiteos/jquery/v311_msos.uc.js"></script>
-	<script src="../../mobilesiteos/msos/core.uc.js"></script>
+<link rel="stylesheet" href="/adorn/adorn.css"/>
+<script src="/adorn/adorn.js" async></script>
+<script src="client_ids.js"></script>
 
 <h1>Profile Demo: With Windows Live and FaceBook SDK's</h1>
 
@@ -45,7 +43,7 @@ FB.Event.subscribe('auth.login', function(){
 <script class="pre">
 // Initiate the windows live app
 WL.init({
-	client_id: msos.config.oauth2.windows,
+	client_id: WINDOWS_CLIENT_ID,
 	scope: "wl.signin"
 });
 
@@ -56,6 +54,6 @@ WL.ui({
 
 // Initiate the facebook app
 FB.init({
-	appId: msos.config.oauth2.facebook
+	appId: FACEBOOK_CLIENT_ID
 });
 </script>

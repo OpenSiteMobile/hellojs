@@ -1,10 +1,7 @@
 <!DOCTYPE html>
-
-	<script src="../../mobilesiteos/msos/base.uc.js"></script>
-	<script src="./config_std.js"></script>
-	<script src="../../mobilesiteos/jquery/v311_msos.uc.js"></script>
-	<script src="../../mobilesiteos/msos/core.uc.js"></script>
-
+<link rel="stylesheet" href="/adorn/adorn.css"/>
+<script src="/adorn/adorn.js" async></script>
+<script src="../client_ids.js"></script>
 <title>Windows Live demo</title>
 
 <script class="pre" src="https://apis.google.com/js/client:plusone.js?onload=render"></script>
@@ -40,7 +37,7 @@ function disconnectUser() {
 
 
 var signinParams = {
-	'clientid' : msos.config.oauth2.google,
+	'clientid' : GOOGLE_CLIENT_ID,
 	'cookiepolicy' : 'single_host_origin',
 	callback:signinCallback,
 };

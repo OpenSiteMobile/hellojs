@@ -26,9 +26,7 @@ hello.utils = {
 			}
 			else if (r && (r instanceof Object || typeof r === 'object') && a && (a instanceof Object || typeof a === 'object') && r !== a) {
 				for (var x in a) {
-					if (a.hasOwnProperty(x)) {
-						r[x] = hello.utils.extend(r[x], a[x]);
-					}
+					r[x] = hello.utils.extend(r[x], a[x]);
 				}
 			}
 			else {

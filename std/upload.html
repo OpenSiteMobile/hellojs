@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 
-	<script src="../../mobilesiteos/msos/base.uc.js"></script>
-	<script src="./config_std.js"></script>
-	<script src="../../mobilesiteos/jquery/v311_msos.uc.js"></script>
-	<script src="../../mobilesiteos/msos/core.uc.js"></script>
-
+<script src="client_ids.js"></script>
 <h1>Upload Photo w/ hello.js</h1>
 
 <h2>Please signin to gather a list of Albums you already have created</h2>
@@ -100,7 +96,7 @@ function upload(){
 <script class="pre">
 
 // Initiate hellojs
-hello.init( msos.config.oauth2, {
+hello.init( CLIENT_IDS, {
 	scope: "publish_files, photos",
 	redirect_uri : "../redirect.html"
 });

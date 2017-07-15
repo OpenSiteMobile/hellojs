@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 
-	<script src="../../mobilesiteos/msos/base.uc.js"></script>
-	<script src="./config_std.js"></script>
-	<script src="../../mobilesiteos/jquery/v311_msos.uc.js"></script>
-	<script src="../../mobilesiteos/msos/core.uc.js"></script>
-	<script src="./src/hello.polyfill.js"></script>
-	<script src="./src/hello.js"></script>
-	<script src="./src/modules/google.js"></script>
+<script src="client_ids.js"></script>
+<script src="./src/hello.polyfill.js"></script>
+<script src="./src/hello.js"></script>
+<script src="./src/modules/google.js"></script>
 
 <h1>hello, then</h1>
 
@@ -39,7 +36,15 @@ function login(network){
 }
 </script>
 
+
 <h2>Promise.all</h2>
+
+<p><code>Promise.all</code> is not native in IE yet so here's a shim</p>
+<script src="http://s3.amazonaws.com/es6-promises/promise-1.0.0.min.js" class="pre"></script>
+
+
+<h3>Example Promise.all</h3>
+
 
 <p>
 <button id='google' onclick="friendsAndContacts('google');">google friends and contacts</button>
@@ -79,9 +84,9 @@ function friendsAndContacts(network){
 <p>Initiate app</p>
 <script class="pre">
 hello.init( {
-	google : msos.config.oauth2.google
+	google : CLIENT_IDS.google
 },
 {
-	redirect_uri : './redirect.html'
+	redirect_uri : '../redirect.html'
 });
 </script>

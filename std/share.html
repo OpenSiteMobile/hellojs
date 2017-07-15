@@ -1,14 +1,11 @@
 <!DOCTYPE html>
 
-	<script src="../../mobilesiteos/msos/base.uc.js"></script>
-	<script src="./config_std.js"></script>
-	<script src="../../mobilesiteos/jquery/v311_msos.uc.js"></script>
-	<script src="../../mobilesiteos/msos/core.uc.js"></script>
-	<script src="./src/hello.polyfill.js"></script>
-	<script src="./src/hello.js"></script>
-	<script src="./src/modules/windows.js"></script>
-	<script src="./src/modules/facebook.js"></script>
-	<script src="./src/modules/google.js"></script>
+<script src="client_ids.js"></script>
+<script src="./src/hello.polyfill.js"></script>
+<script src="./src/hello.js"></script>
+<script src="./src/modules/windows.js"></script>
+<script src="./src/modules/facebook.js"></script>
+<script src="./src/modules/google.js"></script>
 
 <style>
 	form{
@@ -34,6 +31,7 @@
 		<br />
 		<label>link</label> <input type="url" name="link" value="http://adodson.com/hello.js"/>
 	</form>
+
 </blockquote>
 
 
@@ -51,5 +49,5 @@ function post(network){
 	})
 }
 
-hello.init(msos.config.oauth2, {redirect_uri:'./redirect.html'});
+hello.init(CLIENT_IDS, {redirect_uri:'../redirect.html'});
 </script>

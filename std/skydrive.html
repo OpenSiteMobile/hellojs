@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 
-	<script src="../../mobilesiteos/msos/base.uc.js"></script>
-	<script src="./config_std.js"></script>
-	<script src="../../mobilesiteos/jquery/v311_msos.uc.js"></script>
-	<script src="../../mobilesiteos/msos/core.uc.js"></script>
+<script src="client_ids.js"></script>
 
 <title>Simple SkyDrive Demo</title>
 <style>
@@ -31,7 +28,7 @@ img:nth-child(3n){
 <h1>Simple Skydrive demo</h1>
 <blockquote>
 	<p>This demo uses OAuth2 and CORS (or JSONP) to make some REST calls which navigate the Windows Live Graph API to get some photos out of Skydrive. It is PLUGIN-FREE!</p>
-<p>If running locally, <a href="http://manage.dev.live.com/">register your development domain</a> and replace msos.config.oauth2.windows (below) with the client_id you are assigned</p>
+<p>If running locally, <a href="http://manage.dev.live.com/">register your development domain</a> and replace WINDOWS_CLIENT_ID (below) with the client_id you are assigned</p>
 </blockquote>
 
 <p>Build a login button</p>
@@ -43,7 +40,7 @@ img:nth-child(3n){
 <script class="pre">
 function login(){
 	window.location = 'https://oauth.live.com/authorize'+ 
-		'?client_id='+msos.config.oauth2.windows+
+		'?client_id='+WINDOWS_CLIENT_ID+
 		'&scope=wl.skydrive'+
 		'&response_type=token'+
 		'&redirect_uri='+encodeURIComponent(window.location.href);
