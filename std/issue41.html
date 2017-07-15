@@ -12,7 +12,7 @@
     </head>
     <body>
         <script>
-            hello.init(CLIENT_IDS, {redirect_uri:'../redirect.html'});
+            hello.init(CLIENT_IDS, {redirect_uri:REDIRECT_URI});
 
             var sessionstart = function(auth) {
                 console.log('Welcome!  Fetching your information, from ' + auth.network);
