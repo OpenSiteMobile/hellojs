@@ -15,7 +15,7 @@ var WINDOWS_CLIENT_ID = '000000004C107945';
 
 
 // Google Register --  https://console.developers.google.com
-var GOOGLE_CLIENT_ID = '296183405068-3379jn2v9polk5aj6j6bilf1k42j0vp2.apps.googleusercontent.com';
+var GOOGLE_CLIENT_ID = '296183405068-f6pijogq28q8l43rdosescs30q45b8h2.apps.googleusercontent.com';
 
 // To make it a little easier
 var CLIENT_IDS = {
