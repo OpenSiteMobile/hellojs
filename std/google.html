@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 
-	<script src="../../mobilesiteos/msos/base.uc.js"></script>
-	<script src="./config_std.js"></script>
-	<script src="../../mobilesiteos/jquery/v311_msos.uc.js"></script>
-	<script src="../../mobilesiteos/msos/core.uc.js"></script>
+<script src="client_ids.js"></script>
 
 <title>hello( google )</title>
 <h1>hello( google )</h1>
@@ -30,9 +27,9 @@ function login(network){
 
 <script class="pre">
 hello.init({
-	google : msos.config.oauth2.google
+	google : GOOGLE_CLIENT_ID
 },{
-	redirect_uri: './redirect.html',
+	redirect_uri: '../redirect.html',
 	scope: 'friends'
 });
 </script>

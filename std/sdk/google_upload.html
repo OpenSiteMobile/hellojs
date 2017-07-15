@@ -1,10 +1,6 @@
 <!DOCTYPE html>
-
-	<script src="../../mobilesiteos/msos/base.uc.js"></script>
-	<script src="./config_std.js"></script>
-	<script src="../../mobilesiteos/jquery/v311_msos.uc.js"></script>
-	<script src="../../mobilesiteos/msos/core.uc.js"></script>
-
+<link rel="stylesheet" href="/adorn/adorn.css"/>
+<script src="../client_ids.js"></script>
 <script>
 // DEBUGGING
 window.addEventListener('message', function(){
@@ -49,11 +45,11 @@ window.addEventListener('message', function(){
 
 	var btn = document.getElementById('google');
 	btn.onclick = function(){
-		gapi.auth.authorize({client_id: msos.config.oauth2.google, scope: scopes, immediate: false}, handleAuthResult);
+		gapi.auth.authorize({client_id: GOOGLE_CLIENT_ID, scope: scopes, immediate: false}, handleAuthResult);
 	};
 
 	window.setTimeout(function(){
-		gapi.auth.authorize({client_id: msos.config.oauth2.google, scope: scopes, immediate: true}, handleAuthResult);
+		gapi.auth.authorize({client_id: GOOGLE_CLIENT_ID, scope: scopes, immediate: true}, handleAuthResult);
 	},1000);
 
 })();
