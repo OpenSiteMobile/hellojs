@@ -91,5 +91,5 @@ var OAUTH_PROXY_URL = 'https://auth-server.herokuapp.com/proxy';
 //
 // Redirect URI
 //
-var REDIRECT_URI = '/hello.js/redirect.html';
+var REDIRECT_URI = 'https://opensitemobile.com/hellojs/std/redirect.html';
 
