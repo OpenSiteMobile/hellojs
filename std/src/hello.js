@@ -121,7 +121,7 @@ hello.utils.extend(hello, {
 		}
 
 		// Create an instance of Events
-		self.utils.Event.call(self);
+		self.utils.Event.callcheck;
 
 		return self;
 	},
@@ -570,7 +570,7 @@ hello.utils.extend(hello.utils, {
 	// @param object parameters
 	qs: function(url, params, formatFunction) {
 
-		console.log('hello.utils.qs -> start, url: ' + url + ', params:', params);
+		console.log('hello.utils.qs -> start, url: ' + url + ',\n     params:', params);
 		if (params) {
 
 			// Set default formatting function
@@ -603,7 +603,7 @@ hello.utils.extend(hello.utils, {
 		var a = {};
 		var m;
 
-		console.log('hello.utils.param -> start.');
+		console.log('hello.utils.param -> start, for:', s);
 
 		if (typeof (s) === 'string') {
 
@@ -634,7 +634,9 @@ hello.utils.extend(hello.utils, {
 				}
 			}}
 
-			return a.join('&');
+			var str = a.join('&');
+			console.log('hello.utils.param -> done, string: ' + str);
+			return str;
 		}
 	},
 
@@ -1516,6 +1518,7 @@ hello.utils.Event.call(hello);
 	hello.on('auth.login, auth.logout', function(auth) {
 		if (auth && typeof (auth) === 'object' && auth.network) {
 			oldSessions[auth.network] = hello.utils.store(auth.network) || {};
+			console.log('monitor -> oldSessions:', oldSessions);
 		}
 	});
 
@@ -1529,11 +1532,14 @@ hello.utils.Event.call(hello);
 			});
 		};
 
+		console.log('monitor - check -> start.');
+
 		// Loop through the services
 		for (var name in hello.services) {if (hello.services.hasOwnProperty(name)) {
 
 			if (!hello.services[name].id) {
 				// We haven't attached an ID so dont listen.
+				console.log('monitor - check -> no provider for: ' + name);
 				continue;
 			}
 
@@ -1541,6 +1547,8 @@ hello.utils.Event.call(hello);
 			var session = hello.utils.store(name) || {};
 			var provider = hello.services[name];
 			var oldSess = oldSessions[name] || {};
+
+			console.log('monitor - check -> loop services, for: ' + name + ', session:', session);
 
 			// Listen for globalEvents that did not get triggered from the child
 			if (session && 'callback' in session) {
@@ -1551,7 +1559,7 @@ hello.utils.Event.call(hello);
 					delete session.callback;
 				}
 				catch (e) {
-
+					console.error('monitor - check -> execute callback: ' + cb + ', failed:', e);
 				}
 
 				// Update store
@@ -1563,14 +1571,14 @@ hello.utils.Event.call(hello);
 					window[cb](session);
 				}
 				catch (e) {
-					console.error('monitor - (self) -> execute callback: ' + cb + ', failed:', e);
+					console.error('monitor - check -> execute callback: ' + cb + ', failed:', e);
 				}
 			}
 
 			// Refresh token
 			if (session && ('expires' in session) && session.expires < CURRENT_TIME) {
 
-				console.log('monitor - (self) -> expired');
+				console.log('monitor - check -> expired, for: ' + name);
 
 				// If auto refresh is possible
 				// Either the browser supports
@@ -1600,25 +1608,25 @@ hello.utils.Event.call(hello);
 			// Has session changed?
 			else if (oldSess.access_token === session.access_token &&
 			oldSess.expires === session.expires) {
-				console.log('monitor - (self) -> no change');
+				console.log('monitor - check -> no change, for: ' + name);
 				continue;
 			}
 
 			// Access_token has been removed
 			else if (!session.access_token && oldSess.access_token) {
-				console.log('monitor - (self) -> logout');
+				console.log('monitor - check -> logout, for: ' + name);
 				emit('logout');
 			}
 
 			// Access_token has been created
 			else if (session.access_token && !oldSess.access_token) {
-				console.log('monitor - (self) -> login');
+				console.log('monitor - check -> login, for: ' + name);
 				emit('login');
 			}
 
 			// Access_token has been updated
 			else if (session.expires !== oldSess.expires) {
-				console.log('monitor - (self) -> update');
+				console.log('monitor - check -> update, for: ' + name);
 				emit('update');
 			}
 
@@ -1633,6 +1641,8 @@ hello.utils.Event.call(hello);
 
 		// Check error events
 		setTimeout(self, 1000);
+
+		console.log('monitor - check -> done!');
 	})();
 
 	console.log('monitor -> done!');
