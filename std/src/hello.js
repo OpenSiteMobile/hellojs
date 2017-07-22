@@ -617,7 +617,7 @@ hello.utils.extend(hello.utils, {
 				}
 			}
 
-			msos.console.debug('hello.utils.param -> done, object:', a);
+			console.log('hello.utils.param -> done, object:', a);
 			return a;
 		}
 		else {
