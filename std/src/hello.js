@@ -1510,7 +1510,7 @@ hello.utils.Event.call(hello);
 	// Hash of expired tokens
 	var expired = {};
 
-	console.log(tmp_mt + 'start.');
+	console.log('monitor -> start.');
 
 	// Listen to other triggers to Auth events, use these to update this
 	hello.on('auth.login, auth.logout', function(auth) {
