@@ -135,6 +135,8 @@ hello.utils.extend(hello, {
 
 		var utils = this.utils;
 
+		console.log('hello.init -> start, services:', services);
+		
 		if (!services) {
 			return this.services;
 		}
@@ -152,6 +154,9 @@ hello.utils.extend(hello, {
 
 		// Update the default settings with this one.
 		if (options) {
+
+			msos.console.debug('hello.init -> extend setting, options:', options);
+
 			utils.extend(this.settings, options);
 
 			// Do this immediatly incase the browser changes the current path.
@@ -160,6 +165,7 @@ hello.utils.extend(hello, {
 			}
 		}
 
+		console.log('hello.init -> done!');
 		return this;
 	},
 
@@ -1640,7 +1646,7 @@ hello.utils.Event.call(hello);
 		}}
 
 		// Check error events
-		setTimeout(self, 1000);
+		setTimeout(self, 5000);
 
 		console.log('monitor - check -> done!');
 	})();
