@@ -11,6 +11,7 @@
  */
 
 var hello = function(name) {
+	console.log('hello -> called for: ' + name);
 	return hello.use(name);
 };
 
@@ -178,6 +179,8 @@ hello.utils.extend(hello, {
 		// Get parameters
 		var p = utils.args({network: 's', options: 'o', callback: 'f'}, arguments);
 
+		console.log('hello.login -> start, p:', p);
+
 		// Local vars
 		var url;
 
@@ -214,6 +217,7 @@ hello.utils.extend(hello, {
 
 		// Create a global listener to capture events triggered out of scope
 		var callbackId = utils.globalEvent(function(str) {
+			console.log('hello.login - cb -> start.');
 
 			// The responseHandler returns a string, lets save this locally
 			var obj;
@@ -243,6 +247,7 @@ hello.utils.extend(hello, {
 				// Reject a successful login
 				promise.reject(obj);
 			}
+			console.log('hello.login - cb -> done!');
 		});
 
 		var redirectUri = utils.url(opts.redirect_uri).href;
@@ -328,6 +333,8 @@ hello.utils.extend(hello, {
 				// What is different about the scopes in the session vs the scopes in the new login?
 				var diff = utils.diff((session.scope || '').split(SCOPE_SPLIT), (p.qs.state.scope || '').split(SCOPE_SPLIT));
 				if (diff.length === 0) {
+
+					console.log('hello.login -> found access_token');
 
 					// OK trigger the callback
 					promise.fulfill({
@@ -430,6 +437,7 @@ hello.utils.extend(hello, {
 			window.location = url;
 		}
 
+		console.log('hello.login -> done!');
 		return promise.proxy;
 
 		function encodeFunction(s) {return s;}
@@ -452,6 +460,8 @@ hello.utils.extend(hello, {
 		var p = utils.args({name:'s', options: 'o', callback: 'f'}, arguments);
 
 		p.options = p.options || {};
+
+		console.log('hello.logout -> start, p:', p);
 
 		// Add callback to events
 		promise.proxy.then(p.callback, p.callback);
@@ -515,6 +525,7 @@ hello.utils.extend(hello, {
 			promise.reject(error('invalid_session', 'There was no session to remove'));
 		}
 
+		console.log('hello.logout -> done!');
 		return promise.proxy;
 	},
 
@@ -522,13 +533,17 @@ hello.utils.extend(hello, {
 	// @param string optional, name of the service to get information about.
 	getAuthResponse: function(service) {
 
+		console.log('hello.getAuthResponse -> start, for: ' + service);
+
 		// If the service doesn't exist
 		service = service || this.settings.default_service;
 
 		if (!service || !(service in this.services)) {
+			console.warn('hello.getAuthResponse -> done, service na');
 			return null;
 		}
 
+		console.log('hello.getAuthResponse -> done!');
 		return this.utils.store(service) || null;
 	},
 
@@ -541,6 +556,7 @@ hello.utils.extend(hello.utils, {
 
 	// Error
 	error: function(code, message) {
+		console.log('hello.utils.error -> ' + code + ': ' + message);
 		return {
 			error: {
 				code: code,
@@ -554,6 +570,7 @@ hello.utils.extend(hello.utils, {
 	// @param object parameters
 	qs: function(url, params, formatFunction) {
 
+		console.log('hello.utils.qs -> start, url: ' + url + ', params:', params);
 		if (params) {
 
 			// Set default formatting function
@@ -574,6 +591,7 @@ hello.utils.extend(hello.utils, {
 			return url + (url.indexOf('?') > -1 ? '&' : '?') + this.param(params, formatFunction);
 		}
 
+		console.log('hello.utils.qs ->  done, url: ' + url);
 		return url;
 	},
 
@@ -584,6 +602,8 @@ hello.utils.extend(hello.utils, {
 		var b;
 		var a = {};
 		var m;
+
+		console.log('hello.utils.param -> start.');
 
 		if (typeof (s) === 'string') {
 
@@ -597,6 +617,7 @@ hello.utils.extend(hello.utils, {
 				}
 			}
 
+			msos.console.debug('hello.utils.param -> done, object:', a);
 			return a;
 		}
 		else {
@@ -1212,6 +1233,8 @@ hello.utils.extend(hello.utils, {
 		// If the guid has not been supplied then create a new one.
 		guid = guid || '_hellojs_' + parseInt(Math.random() * 1e12, 10).toString(36);
 
+		console.log('hello.utils.globalEvent -> start, guid: ' + guid);
+
 		// Define the callback function
 		window[guid] = function() {
 			// Trigger the callback
@@ -1225,6 +1248,7 @@ hello.utils.extend(hello.utils, {
 			}
 		};
 
+		console.log('hello.utils.globalEvent ->  done, guid: ' + guid);
 		return guid;
 	},
 
@@ -1284,11 +1308,11 @@ hello.utils.extend(hello.utils, {
 	},
 
 	// OAuth and API response handler
-	responseHandler: function(window, parent) {
+	responseHandler: function(_win, parent) {
 
 		var _this = this;
 		var p;
-		var location = window.location;
+		var location = _win.location;
 
 		// Is this an auth relay message which needs to call the proxy?
 		p = _this.param(location.search);
@@ -1486,6 +1510,8 @@ hello.utils.Event.call(hello);
 	// Hash of expired tokens
 	var expired = {};
 
+	console.log(tmp_mt + 'start.');
+
 	// Listen to other triggers to Auth events, use these to update this
 	hello.on('auth.login, auth.logout', function(auth) {
 		if (auth && typeof (auth) === 'object' && auth.network) {
@@ -1524,7 +1550,9 @@ hello.utils.Event.call(hello);
 				try {
 					delete session.callback;
 				}
-				catch (e) {}
+				catch (e) {
+
+				}
 
 				// Update store
 				// Removing the callback
@@ -1534,11 +1562,15 @@ hello.utils.Event.call(hello);
 				try {
 					window[cb](session);
 				}
-				catch (e) {}
+				catch (e) {
+					console.error('monitor - (self) -> execute callback: ' + cb + ', failed:', e);
+				}
 			}
 
 			// Refresh token
 			if (session && ('expires' in session) && session.expires < CURRENT_TIME) {
+
+				console.log('monitor - (self) -> expired');
 
 				// If auto refresh is possible
 				// Either the browser supports
@@ -1568,21 +1600,25 @@ hello.utils.Event.call(hello);
 			// Has session changed?
 			else if (oldSess.access_token === session.access_token &&
 			oldSess.expires === session.expires) {
+				console.log('monitor - (self) -> no change');
 				continue;
 			}
 
 			// Access_token has been removed
 			else if (!session.access_token && oldSess.access_token) {
+				console.log('monitor - (self) -> logout');
 				emit('logout');
 			}
 
 			// Access_token has been created
 			else if (session.access_token && !oldSess.access_token) {
+				console.log('monitor - (self) -> login');
 				emit('login');
 			}
 
 			// Access_token has been updated
 			else if (session.expires !== oldSess.expires) {
+				console.log('monitor - (self) -> update');
 				emit('update');
 			}
 
@@ -1599,6 +1635,7 @@ hello.utils.Event.call(hello);
 		setTimeout(self, 1000);
 	})();
 
+	console.log('monitor -> done!');
 })(hello);
 
 // EOF CORE lib
@@ -1889,6 +1926,8 @@ hello.utils.extend(hello.utils, {
 		var _this = this;
 		var error = _this.error;
 
+		console.log('hello.utils.request -> start, p:', p);
+
 		// This has to go through a POST request
 		if (!_this.isEmpty(p.data) && !('FileList' in window) && _this.hasBinary(p.data)) {
 
@@ -1918,6 +1957,7 @@ hello.utils.extend(hello.utils, {
 
 			});
 
+			console.log('hello.utils.request -> done, for cors.');
 			return;
 		}
 
@@ -1948,6 +1988,7 @@ hello.utils.extend(hello.utils, {
 					_this.jsonp(url, callback, p.callbackID, p.timeout);
 				});
 
+				console.log('hello.utils.request -> done, for get request.');
 				return;
 			}
 			else {
@@ -1979,13 +2020,13 @@ hello.utils.extend(hello.utils, {
 					_this.post(url, p.data, opts, callback, p.callbackID, p.timeout);
 				});
 
+				console.log('hello.utils.request -> done, for form.');
 				return;
 			}
 		}
 
 		// None of the methods were successful throw an error
 		callback(error('invalid_request', 'There was no mechanism for handling this request'));
-
 		return;
 
 		// Format URL
@@ -2036,6 +2077,7 @@ hello.utils.extend(hello.utils, {
 				});
 			}
 
+			console.log('hello.utils.request - formatUrl -> called, path:', path);
 			callback(path);
 		}
 	},
@@ -2085,7 +2127,9 @@ hello.utils.extend(hello.utils, {
 		// But does clone everything else.
 		var clone = {};
 		for (var x in obj) {
-			clone[x] = this.clone(obj[x]);
+			if (obj.hasOwnProperty(x)) {
+				clone[x] = this.clone(obj[x]);
+			}
 		}
 
 		return clone;
@@ -2099,6 +2143,9 @@ hello.utils.extend(hello.utils, {
 
 		// Binary?
 		var binary = false;
+
+		console.log('hello.utils.xhr -> start.');
+
 		if (method === 'blob') {
 			binary = method;
 			method = 'GET';
@@ -2181,6 +2228,7 @@ hello.utils.extend(hello.utils, {
 
 		r.send(data);
 
+		console.log('hello.utils.xhr -> done, r:', r);
 		return r;
 
 		// Headers are returned as a string
@@ -2219,6 +2267,8 @@ hello.utils.extend(hello.utils, {
 			}
 
 		};
+
+		console.log('hello.utils.jsonp -> start, url: ' + url + ', callbackID:', callbackID);
 
 		// Add callback to the window object
 		callbackID = _this.globalEvent(function(json) {
@@ -2268,6 +2318,8 @@ hello.utils.extend(hello.utils, {
 			}, timeout);
 		}
 
+		console.log('hello.utils.jsonp -> done, callbackID:', callbackID);
+
 		// TODO: add fix for IE,
 		// However: unable recreate the bug of firing off the onreadystatechange before the script content has been executed and the value of "result" has been defined.
 		// Inject script tag into the head element
@@ -2303,6 +2355,8 @@ hello.utils.extend(hello.utils, {
 			}
 		};
 
+		console.log('hello.utils.post -> start, url: ' + url + ', callbackID: ' + callbackID + ', data:', data);
+
 		// What is the name of the callback to contain
 		// We'll also use this to name the iframe
 		_this.globalEvent(cb, callbackID);
@@ -2334,7 +2388,7 @@ hello.utils.extend(hello.utils, {
 
 		if (timeout) {
 			setTimeout(function() {
-				cb(error('timeout', 'The post operation timed out'));
+				cb(error('timeout', 'hello.utils.post -> operation timed out'));
 			}, timeout);
 		}
 
@@ -2494,6 +2548,8 @@ hello.utils.extend(hello.utils, {
 				}
 			}, 0);
 		}, 100);
+
+		console.log('hello.utils.post -> done!');
 	},
 
 	// Some of the providers require that only multipart is used with non-binary forms.
