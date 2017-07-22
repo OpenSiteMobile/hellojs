@@ -155,7 +155,7 @@ hello.utils.extend(hello, {
 		// Update the default settings with this one.
 		if (options) {
 
-			msos.console.debug('hello.init -> extend setting, options:', options);
+			console.log('hello.init -> extend setting, options:', options);
 
 			utils.extend(this.settings, options);
 
