@@ -135,9 +135,10 @@ hello.utils.extend(hello, {
 
 		var utils = this.utils;
 
-		console.log('hello.init -> start, services:', services);
+		console.log('hello.init -> start.');
 		
 		if (!services) {
+			console.log('hello.init -> done, return hello.services obj.');
 			return this.services;
 		}
 
@@ -165,7 +166,7 @@ hello.utils.extend(hello, {
 			}
 		}
 
-		console.log('hello.init -> done!');
+		console.log('hello.init -> done, extend hello.services:', this.services);
 		return this;
 	},
 
@@ -291,6 +292,8 @@ hello.utils.extend(hello, {
 
 		// Include default scope settings (cloned).
 		var scope = _this.settings.scope ? [_this.settings.scope.toString()] : [];
+
+		console.log('hello.login -> session/scope:', session, scope);
 
 		// Extend the providers scope list with the default
 		var scopeMap = utils.merge(_this.settings.scope_map, provider.scope || {});
@@ -575,8 +578,10 @@ hello.utils.extend(hello.utils, {
 	// @param string url
 	// @param object parameters
 	qs: function(url, params, formatFunction) {
+		var new_url = '';
 
-		console.log('hello.utils.qs -> start, url: ' + url + ',\n     params:', params);
+		console.log('hello.utils.qs -> start, url: ' + url);
+
 		if (params) {
 
 			// Set default formatting function
@@ -594,7 +599,9 @@ hello.utils.extend(hello.utils, {
 		}
 
 		if (!this.isEmpty(params)) {
-			return url + (url.indexOf('?') > -1 ? '&' : '?') + this.param(params, formatFunction);
+			new_url = url + (url.indexOf('?') > -1 ? '&' : '?') + this.param(params, formatFunction);
+			console.log('hello.utils.qs ->  done,  (empty params) url: ' + new_url);
+			return new_url; 
 		}
 
 		console.log('hello.utils.qs ->  done, url: ' + url);
@@ -718,6 +725,7 @@ hello.utils.extend(hello.utils, {
 			var json = get();
 
 			if (name && value === undefined) {
+				console.log('hello.utils.store - get ->  name: ' + name + ', value: ' + json[name]);
 				return json[name] || null;
 			}
 			else if (name && value === null) {
@@ -729,6 +737,7 @@ hello.utils.extend(hello.utils, {
 				}
 			}
 			else if (name) {
+				console.log('hello.utils.store - set -> name: ' + name + ', value: ' + value);
 				json[name] = value;
 			}
 			else {
@@ -1513,7 +1522,8 @@ hello.utils.Event.call(hello);
 (function(hello) {
 
 	// Monitor for a change in state and fire
-	var oldSessions = {};
+	var oldSessions = {},
+		check_count = 0;
 
 	// Hash of expired tokens
 	var expired = {};
@@ -1538,7 +1548,8 @@ hello.utils.Event.call(hello);
 			});
 		};
 
-		console.log('monitor - check -> start.');
+		check_count += 1;
+		console.log('monitor - check -> start (' + check_count + ').');
 
 		// Loop through the services
 		for (var name in hello.services) {if (hello.services.hasOwnProperty(name)) {
@@ -1579,6 +1590,7 @@ hello.utils.Event.call(hello);
 				catch (e) {
 					console.error('monitor - check -> execute callback: ' + cb + ', failed:', e);
 				}
+				console.log('monitor - check -> executed cb, for: ' + name);
 			}
 
 			// Refresh token
