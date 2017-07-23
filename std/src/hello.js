@@ -121,7 +121,7 @@ hello.utils.extend(hello, {
 		}
 
 		// Create an instance of Events
-		self.utils.Event.callcheck;
+		self.utils.Event.call(self);
 
 		return self;
 	},
