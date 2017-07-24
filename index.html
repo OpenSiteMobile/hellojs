@@ -206,9 +206,11 @@
 				function () {
 					var network_id = this.id;
 
+					msos.console.debug(temp_hm + 'clicked: ' + network_id);
+
 					hello(network_id).login(
-						function (input) {
-							log(network_id, input);
+						function (input_obj) {
+							log(network_id, input_obj);
 						}
 					);
 				}
