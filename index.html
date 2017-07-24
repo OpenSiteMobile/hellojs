@@ -194,85 +194,10 @@
 
 			$event_log.text("Debugging Output:\n");
 
-			function gen_debug_output(operation, output) {
-				$event_log.text($event_log.text() + "\n" + operation + ": " + JSON.stringify(output, null, '\t'));
+			function log(name, obj) {
+				$event_log.text($event_log.text() + "\n" + name + ': ' + JSON.stringify(obj, true, 2));
 				if (db) { msos.console.debug(temp_hm + operation); }
 			}
-
-			hello.on(
-				'auth.success',
-				function (r) {
-					// Get Profile
-					var setup = {
-							network: r.network,
-							path: 'me',
-							data: {}
-						};
-
-					hello.api(setup).success(
-						function (p) {
-							msos.notify.info('Successful login to ' + r.network, 'API Success');
-
-							var full_name =	(p.data && p.data.full_name) ? p.data.full_name : '',
-								username =	(p.data && p.data.username)  ? p.data.username : '',
-								name = p.displayName || p.name || full_name || username || '';
-
-							document.getElementById(r.network).innerHTML = "Connected to " + r.network + (name ? " as " + name : '');
-
-							if (db) { msos.console.debug(temp_hm + 'success, data:', p); }
-						}
-					).error(
-						function (p) {
-							msos.notify.error('Something went horribly wrong!', 'API Error');
-							msos.console.error(temp_hm + 'error, data:', p);
-						}
-					).failed(
-						function (p) {
-							msos.notify.warn('Failed action ' + r.network, 'API Failed');
-							msos.console.warn(temp_hm + 'failed, data:', p);
-						}
-					);
-
-					if (db) { msos.console.debug(temp_hm + 'API response:', r); }
-				}
-			);
-
-			hello.on(
-				"success",
-				function (e) { gen_debug_output('success', e); }
-			);
-			hello.on(
-				"error",
-				function (e) { gen_debug_output('error', e); }
-			);
-			hello.on(
-				"failed",
-				function (e) { gen_debug_output('failed', e); }
-			);
-			hello.on(
-				"logout.success",
-				function (e) { gen_debug_output('logout.success', e); }
-			);
-			hello.on(
-				"logout.failed",
-				function (e) { gen_debug_output('logout.failed', e); }
-			);
-			hello.on(
-				"auth.expired",
-				function (e) { gen_debug_output('auth.expired', e); }
-			);
-			hello.on(
-				"auth.logout",
-				function (e) { gen_debug_output('auth.logout', e); }
-			);
-			hello.on(
-				"auth.success",
-				function (e) { gen_debug_output('auth.success', e); }
-			);
-			hello.on(
-				"auth.update",
-				function (e) { gen_debug_output('auth.update', e); }
-			);
 
 			// We can load this late
 			msos.require("hello.to.monitor");
@@ -280,7 +205,12 @@
 			jQuery('#social_login').find('button').click(
 				function () {
 					var network_id = this.id;
-					hello.login({ network: network_id });
+
+					hello(network_id).login(
+						function (input) {
+							log(network_id, input);
+						}
+					);
 				}
 			);
 
