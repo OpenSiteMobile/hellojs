@@ -1440,11 +1440,14 @@ hello.utils.extend(hello.utils, {
 			var cb = obj.callback;
 			var network = obj.network;
 
+			console.log('authenticate - authCallback -> start.');
+
 			// Trigger the callback on the parent
 			_this.store(network, obj);
 
 			// If this is a page request it has no parent or opener window to handle callbacks
 			if (('display' in obj) && obj.display === 'page') {
+				console.log('authenticate - authCallback -> skipped for page.');
 				return;
 			}
 
@@ -1454,7 +1457,9 @@ hello.utils.extend(hello.utils, {
 				try {
 					delete obj.callback;
 				}
-				catch (e) {}
+				catch (e) {
+					console.log('authenticate - authCallback -> delete callback failed, ' + e.message);
+				}
 
 				// Update store
 				_this.store(network, obj);
@@ -1468,11 +1473,13 @@ hello.utils.extend(hello.utils, {
 					callback(parent, cb)(str);
 				}
 				catch (e) {
-					// Error thrown whilst executing parent callback
+					console.log('authenticate - authCallback -> callback: ' + cb + ', failed: ', e);
 				}
 			}
 
 			closeWindow();
+
+			console.log('authenticate - authCallback -> done!');
 		}
 
 		function callback(parent, callbackID) {
@@ -1523,7 +1530,8 @@ hello.utils.Event.call(hello);
 
 	// Monitor for a change in state and fire
 	var oldSessions = {},
-		check_count = 0;
+		check_count = 0,
+		check_timeout = 600000;	// Default checking every 10 minutes
 
 	// Hash of expired tokens
 	var expired = {};
@@ -1540,16 +1548,19 @@ hello.utils.Event.call(hello);
 
 	(function self() {
 
-		var CURRENT_TIME = ((new Date()).getTime() / 1e3);
-		var emit = function(eventName) {
-			hello.emit('auth.' + eventName, {
-				network: name,
-				authResponse: session
-			});
+		var CURRENT_TIME = ((new Date()).getTime() / 1e3),
+			checked = 0,
+			loaded = 0,
+			emit = function(eventName) {
+				hello.emit('auth.' + eventName, {
+					network: name,
+					authResponse: session
+				}
+			);
 		};
 
 		check_count += 1;
-		console.log('monitor - check -> start (' + check_count + ').');
+		console.log('monitor - check -> start (' + String(check_count) + ').');
 
 		// Loop through the services
 		for (var name in hello.services) {if (hello.services.hasOwnProperty(name)) {
@@ -1559,6 +1570,8 @@ hello.utils.Event.call(hello);
 				console.log('monitor - check -> no provider for: ' + name);
 				continue;
 			}
+
+			checked += 1;
 
 			// Get session
 			var session = hello.utils.store(name) || {};
@@ -1627,6 +1640,7 @@ hello.utils.Event.call(hello);
 			else if (oldSess.access_token === session.access_token &&
 			oldSess.expires === session.expires) {
 				console.log('monitor - check -> no change, for: ' + name);
+				loaded += 1;
 				continue;
 			}
 
@@ -1652,13 +1666,27 @@ hello.utils.Event.call(hello);
 			oldSessions[name] = session;
 
 			// Remove the expired flags
-			if (name in expired) {
-				delete expired[name];
+			if (name in expired) { delete expired[name]; }
+
+			if (session.expires && session.expires > CURRENT_TIME) {
+				console.log('monitor - check -> name: ' + name + ', expires in: ' + String(parseInt((session.expires - CURRENT_TIME) / 60, 10)) + ' min.');
+				// We check more often when we get nearer a session expiration (the .8 part)
+				if ((session.expires - CURRENT_TIME) < (check_timeout / 1e3)) {
+					check_timeout = (session.expires - CURRENT_TIME) * 1e3 * 0.8;
+				}
 			}
 		}}
 
-		// Check error events
-		setTimeout(self, 5000);
+		if ((loaded < checked) && (check_count < 11)) {
+			// Check for up to 10, 1 sec. intervals
+			setTimeout(self, 1000);
+		} else {
+			// Never go below 1 sec.
+			check_timeout = check_timeout < 1000 ? 1000 : check_timeout;
+
+			console.log('monitor - check -> timeout: ' + String(check_timeout));
+			setTimeout(self, check_timeout);
+		}
 
 		console.log('monitor - check -> done!');
 	})();
