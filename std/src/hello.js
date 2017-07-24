@@ -109,6 +109,8 @@ hello.utils.extend(hello, {
 	// Define a new instance of the HelloJS library with a default service
 	use: function(service) {
 
+		console.log('hello.use -> start, service: ' + service);
+
 		// Create self, which inherits from its parent
 		var self = Object.create(this);
 
@@ -123,6 +125,7 @@ hello.utils.extend(hello, {
 		// Create an instance of Events
 		self.utils.Event.call(self);
 
+		console.log('hello.use -> done!');
 		return self;
 	},
 
