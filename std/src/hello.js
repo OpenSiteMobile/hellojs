@@ -197,6 +197,8 @@ hello.utils.extend(hello, {
 		// Get all the custom options and store to be appended to the querystring
 		var qs = utils.diffKey(p.options, _this.settings);
 
+		console.log('hello.login -> qs:', qs);
+
 		// Merge/override options with app defaults
 		var opts = p.options = utils.merge(_this.settings, p.options || {});
 
@@ -414,6 +416,8 @@ hello.utils.extend(hello, {
 		// Broadcast this event as an auth:init
 		emit('auth.init', p);
 
+		console.log('hello.login -> p/opts: ', p, opts);
+
 		// Execute
 		// Trigger how we want self displayed
 		if (opts.display === 'none') {
@@ -446,6 +450,8 @@ hello.utils.extend(hello, {
 		}
 
 		else {
+			console.log('hello.login -> forward to: ' + url);
+			alert('Stop for debugging');
 			window.location = url;
 		}
 
@@ -583,7 +589,7 @@ hello.utils.extend(hello.utils, {
 	qs: function(url, params, formatFunction) {
 		var new_url = '';
 
-		console.log('hello.utils.qs -> start, url: ' + url);
+		console.log('hello.utils.qs -> start, url: ' + url + ', params:', params);
 
 		if (params) {
 
@@ -603,7 +609,7 @@ hello.utils.extend(hello.utils, {
 
 		if (!this.isEmpty(params)) {
 			new_url = url + (url.indexOf('?') > -1 ? '&' : '?') + this.param(params, formatFunction);
-			console.log('hello.utils.qs ->  done,  (empty params) url: ' + new_url);
+			console.log('hello.utils.qs ->  done, (empty params) url: ' + new_url);
 			return new_url; 
 		}
 
