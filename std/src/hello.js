@@ -1728,6 +1728,8 @@ hello.api = function() {
 	// Arguments
 	var p = utils.args({path: 's!', query: 'o', method: 's', data: 'o', timeout: 'i', callback: 'f'}, arguments);
 
+	console.log('hello.api -> start.');
+
 	// Method
 	p.method = (p.method || 'get').toLowerCase();
 
@@ -1744,6 +1746,8 @@ hello.api = function() {
 	}
 
 	var data = p.data = p.data || {};
+
+	console.log('hello.api -> data:', data);
 
 	// Completed event callback
 	promise.then(p.callback, p.callback);
@@ -1876,6 +1880,7 @@ hello.api = function() {
 		getPath(url);
 	}
 
+	console.log('hello.api -> done!');
 	return promise.proxy;
 
 	// If url needs a base
@@ -2759,8 +2764,11 @@ hello.utils.extend(hello.utils, {
 		// Get arguments
 		var p = utils.args({path: 's!', method: 's', data:'o', timeout: 'i', callback: 'f'}, arguments);
 
+		console.log('hello.api (amended) -> called.');
+
 		// Change for into a data object
 		if (p.data) {
+			console.log('hello.api (amended) -> p.data:', p.data);
 			utils.dataToJSON(p);
 		}
 
