@@ -138,7 +138,7 @@ hello.utils.extend(hello, {
 
 		var utils = this.utils;
 
-		console.log('hello.init -> start.');
+		console.log('hello.init -> start, services/options:', services, options);
 		
 		if (!services) {
 			console.log('hello.init -> done, return hello.services obj.');
@@ -169,7 +169,7 @@ hello.utils.extend(hello, {
 			}
 		}
 
-		console.log('hello.init -> done, extend hello.services:', this.services);
+		console.log('hello.init -> done, return hello:', _this);
 		return this;
 	},
 
@@ -1528,7 +1528,7 @@ hello.utils.extend(hello.utils, {
 
 // Events
 // Extend the hello object with its own event instance
-hello.utils.Event.call(hello);
+//hello.utils.Event.call(hello);
 
 ///////////////////////////////////
 // Monitoring session state
