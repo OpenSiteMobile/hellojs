@@ -123,7 +123,7 @@ hello.utils.extend(hello, {
 		}
 
 		// Create an instance of Events
-		self.utils.Event.call(self);
+//		self.utils.Event.call(self);
 
 		console.log('hello.use -> done!');
 		return self;
@@ -169,7 +169,7 @@ hello.utils.extend(hello, {
 			}
 		}
 
-		console.log('hello.init -> done, return hello:', _this);
+		console.log('hello.init -> done, return hello:', this);
 		return this;
 	},
 
@@ -1528,7 +1528,7 @@ hello.utils.extend(hello.utils, {
 
 // Events
 // Extend the hello object with its own event instance
-//hello.utils.Event.call(hello);
+hello.utils.Event.call(hello);
 
 ///////////////////////////////////
 // Monitoring session state
