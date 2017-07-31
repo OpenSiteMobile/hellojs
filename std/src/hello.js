@@ -316,13 +316,13 @@ hello.utils.extend(hello, {
 		if (session && 'scope' in session && session.scope instanceof String) {
 			scope.push(session.scope);
 		}
-
+console.log('scope 1:', scope);
 		// Join and Split again
 		scope = scope.join(',').split(SCOPE_SPLIT);
-
+console.log('scope 2:', scope);
 		// Format remove duplicates and empty values
 		scope = utils.unique(scope).filter(filterEmpty);
-
+console.log('scope 3:', scope);
 		// Save the the scopes to the state with the names that they were requested with.
 		p.qs.state.scope = scope.join(',');
 
@@ -331,17 +331,17 @@ hello.utils.extend(hello, {
 			// Does this have a mapping?
 			return (item in scopeMap) ? scopeMap[item] : item;
 		});
-
+console.log('scope 4:', scope);
 		// Stringify and Arrayify so that double mapped scopes are given the chance to be formatted
 		scope = scope.join(',').split(SCOPE_SPLIT);
-
+console.log('scope 5:', scope);
 		// Again...
 		// Format remove duplicates and empty values
 		scope = utils.unique(scope).filter(filterEmpty);
-
+console.log('scope 6:', scope);
 		// Join with the expected scope delimiter into a string
 		p.qs.scope = scope.join(provider.scope_delim || ',');
-
+console.log('p.qs.scope:', p.qs.scope);
 		// Is the user already signed in with the appropriate scopes, valid access_token?
 		if (opts.force === false) {
 
