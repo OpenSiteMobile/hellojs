@@ -138,7 +138,7 @@ hello.utils.extend(hello, {
 
 		var utils = this.utils;
 
-		console.log('hello.init -> start, services/options:', services, options);
+		console.log('hello.init -> start, services', services);
 		
 		if (!services) {
 			console.log('hello.init -> done, return hello.services obj.');
@@ -169,7 +169,7 @@ hello.utils.extend(hello, {
 			}
 		}
 
-		console.log('hello.init -> done, return hello:', this);
+		console.log('hello.init -> done!');
 		return this;
 	},
 
@@ -226,6 +226,8 @@ hello.utils.extend(hello, {
 		}
 
 		var provider = _this.services[p.network];
+
+		console.log('hello.login -> provider:', provider);
 
 		// Create a global listener to capture events triggered out of scope
 		var callbackId = utils.globalEvent(function(str) {
